@@ -5,7 +5,7 @@
 // //- Provide a `Reset Game` button that will clear the contents of the board.
 // //- Display whose turn it is (“X” or “O”).
 // //- Provide win logic and display a winning message.
-// - Provide logic for a cat’s game (tie), also displaying a message.
+// //- Provide logic for a cat’s game (tie), also displaying a message.
 
 
 /*-------------------------------- Constants --------------------------------*/
@@ -45,15 +45,16 @@ init()
 function init(){
   resetBtn.setAttribute("hidden", true)
   board = [
-    0,0,0,
-    0,0,0,
-    0,0,0
+    null,null,null,
+    null,null,null,
+    null,null,null
   ]
   isWinner = null 
   turn = 1
   square.forEach(function(element,idx){
     square[idx].innerText = ''
     square[idx].style.pointerEvents='auto'
+    square[idx].style.backgroundColor ='grey'
   })
   msg.innerText =  `It's X's turn`
   render()
@@ -64,15 +65,14 @@ function handleClick(evt){
   if (turn == 1){
     board[parseInt(evt.target.id)] = 1
     evt.target.style.pointerEvents = "none"
+    evt.target.style.backgroundColor = 'blue'
     msg.innerText = `It's O's turn`
   } else if (turn == -1){
     board[parseInt(evt.target.id)] = -1
     evt.target.style.pointerEvents = "none"
+    evt.target.style.backgroundColor = 'yellow'
     msg.innerText = `It's X's turn`
   }
-  // console.log(evt.target.id)
-  // console.log(turn)
-  // console.log(board)
   turn = turn * -1
   render()
   win()
@@ -109,8 +109,10 @@ function win(){
     isWinner = turn * -1
     if (isWinner == 1){
       msg.innerText = `X is the winner`
+      square.forEach(function(element,idx){square[idx].style.pointerEvents = 'none'})
     } else if (isWinner == -1){
       msg.innerText = `O is the winner`
+      square.forEach(function(element,idx){square[idx].style.pointerEvents = 'none'})
     }
   }
 }

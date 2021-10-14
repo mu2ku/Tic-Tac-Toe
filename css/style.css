@@ -17,13 +17,24 @@ section.board {
   justify-content: center;
 }
 
-.square {
-  background-color: blue;
-}
-
 div {
   border: 3px solid black;
   font-size: 8vmin;
   text-align: center;
   vertical-align: middle;
+}
+
+#message {
+  display:flex;
+  justify-content:center;
+}
+
+h1 {
+  display:flex;
+  justify-content: center;
+}
+
+#reset-button {
+  display: flex;
+  justify-content: center;
 }
