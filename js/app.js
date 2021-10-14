@@ -4,7 +4,7 @@
 // //- Once occupied with an `X` or `O`, the cell cannot be played again.
 // //- Provide a `Reset Game` button that will clear the contents of the board.
 // //- Display whose turn it is (“X” or “O”).
-// - Provide win logic and display a winning message.
+// //- Provide win logic and display a winning message.
 // - Provide logic for a cat’s game (tie), also displaying a message.
 
 
@@ -70,9 +70,9 @@ function handleClick(evt){
     evt.target.style.pointerEvents = "none"
     msg.innerText = `It's X's turn`
   }
-  console.log(evt.target.id)
-  console.log(turn)
-  console.log(board)
+  // console.log(evt.target.id)
+  // console.log(turn)
+  // console.log(board)
   turn = turn * -1
   render()
   win()
@@ -89,6 +89,13 @@ function render(){
 }
 
 function win(){
+  //The absolute value of the sum of the entire board should equal 9 for a cat's game
+  let cat = board.reduce(function(acc,num){
+    return acc + Math.abs(num)},0)
+  if (cat == 9){
+    msg.innerText = `Cat's Game`
+  }
+  //The absolute value of the sum of the win conditions should equal 3 for a win
   if (
     Math.abs(board[0] + board [1] + board[2]) == 3 ||
     Math.abs(board[3] + board [4] + board[5]) == 3 ||
@@ -100,11 +107,12 @@ function win(){
     Math.abs(board[2] + board [4] + board[6]) == 3
   ){
     isWinner = turn * -1
-  }
-  if (isWinner == 1){
-    msg.innerText = `X is the winner`
-  } else if (isWinner == -1){
-    msg.innerText = `O is the winner`
+    if (isWinner == 1){
+      msg.innerText = `X is the winner`
+    } else if (isWinner == -1){
+      msg.innerText = `O is the winner`
+    }
   }
 }
+
 
