@@ -34,7 +34,7 @@ h1 {
   justify-content: center;
 }
 
-#reset-button {
-  display: flex;
+form {
+  display:flex;
   justify-content: center;
 }
