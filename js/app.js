@@ -1,48 +1,48 @@
+// - Display an empty tic-tac-toe board when the page is initially displayed.
+// - A player can click on the nine cells to make a move.
+// - Every click will alternate between marking an `X` and `O`.
+// - Once occupied with an `X` or `O`, the cell cannot be played again.
+// - Provide a `Reset Game` button that will clear the contents of the board.
+// - Display whose turn it is (“X” or “O”).
+// - Provide win logic and display a winning message.
+// - Provide logic for a cat’s game (tie), also displaying a message.
+
+
 /*-------------------------------- Constants --------------------------------*/
 
-
+winCondition = [
+  [0,1,2],
+  [3,4,5], 
+  [6,7,8],
+  [0,3,6],
+  [1,4,7],
+  [2,5,8],
+  [0,5,8],
+  [2,5,6]
+]
 
 /*---------------------------- Variables (state) ----------------------------*/
 
-let board = [
-  0,0,0,
-  0,0,0,
-  0,0,0
-]
-let turn = 1
-let isWinner = null
+let board
+let turn
+let isWinner
 
 /*------------------------ Cached Element References ------------------------*/
 
-// let top_left = document.getElementById('sq0')
-// let top_mid = document.getElementById('sq1')
-// let top_right = document.getElementById('sq2')
-// let mid_left = document.getElementById('sq3')
-// let mid_mid = document.getElementById('sq4')
-// let mid_right = document.getElementById('sq5')
-// let bottom_left = document.getElementById('sq6')
-// let bottom_mid = document.getElementById('sq7')
-// let bottom_right = document.getElementById('sq8')
+
 let square = document.querySelectorAll('.square')
-let resetBtn = document.getElementById('#reset-button')
+let resetBtn = document.getElementById('reset-button')
+let msg = document.getElementById('message')
 
 /*----------------------------- Event Listeners -----------------------------*/
 
-// top_left.addEventListener('click', handleClick)
-// top_mid.addEventListener('click', handleClick)
-// top_right.addEventListener('click', handleClick)
-// mid_left.addEventListener('click', handleClick)
-// mid_mid.addEventListener('click', handleClick)
-// mid_right.addEventListener('click', handleClick)
-// bottom_left.addEventListener('click', handleClick)
-// bottom_mid.addEventListener('click', handleClick)
-// bottom_right.addEventListener('click', handleClick)
 square.forEach(function(element,idx){square[idx].addEventListener('click', handleClick)})
-// resetBtn.addEventListener('click', init)
+resetBtn.addEventListener('click', init)
+msg.addEventListener('click',handleClick)
 
 /*-------------------------------- Functions --------------------------------*/
 
-// init()
+init()
 
 function init(){
   resetBtn.setAttribute("hidden", true)
@@ -53,15 +53,42 @@ function init(){
   ]
   isWinner = null // The winner variable will hold the player value (1 or -1) if there's a winner. The winner will hold a 'T' if there's a tie.
   turn = 1 // X's turns will be marked by 1. O's turns will be marked by -1
+  square.forEach(function(element,idx){
+    square[idx].innerText = ''
+    square[idx].style.pointerEvents='auto'
+  })
+  msg.innerText =  `It's X's turn`
   render()
 }
 
 function handleClick(evt){
-  evt.target.style.backgroundColor = 'red'
+  resetBtn.removeAttribute("hidden")
+  if (turn == 1){
+    board[parseInt(evt.target.id)] = 1
+    evt.target.style.pointerEvents = "none"
+    msg.innerText = `It's O's turn`
+  } else if (turn == -1){
+    board[parseInt(evt.target.id)] = -1
+    evt.target.style.pointerEvents = "none"
+    msg.innerText = `It's X's turn`
+  }
+  // console.log(evt.target.id)
+  // console.log(turn)
+  // console.log(board)
   turn = turn * -1
   render()
 }
 
-square.forEach(function render(element,idx){
-square[idx].innerText = board[idx]
-})
+function render(){
+  square.forEach(function(element,idx){
+    if (board[idx] == 1){
+      square[idx].innerText = 'X'
+    } else if (board[idx] == -1){
+      square[idx].innerText = 'O'
+    }
+  })
+}
+
+function win(){
+  
+}
