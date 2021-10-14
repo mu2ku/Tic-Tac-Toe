@@ -1,9 +1,9 @@
-// - Display an empty tic-tac-toe board when the page is initially displayed.
-// - A player can click on the nine cells to make a move.
-// - Every click will alternate between marking an `X` and `O`.
-// - Once occupied with an `X` or `O`, the cell cannot be played again.
-// - Provide a `Reset Game` button that will clear the contents of the board.
-// - Display whose turn it is (“X” or “O”).
+// //- Display an empty tic-tac-toe board when the page is initially displayed.
+// //- A player can click on the nine cells to make a move.
+// //- Every click will alternate between marking an `X` and `O`.
+// //- Once occupied with an `X` or `O`, the cell cannot be played again.
+// //- Provide a `Reset Game` button that will clear the contents of the board.
+// //- Display whose turn it is (“X” or “O”).
 // - Provide win logic and display a winning message.
 // - Provide logic for a cat’s game (tie), also displaying a message.
 
@@ -17,15 +17,13 @@ winCondition = [
   [0,3,6],
   [1,4,7],
   [2,5,8],
-  [0,5,8],
-  [2,5,6]
+  [0,4,8],
+  [2,4,6]
 ]
 
 /*---------------------------- Variables (state) ----------------------------*/
 
-let board
-let turn
-let isWinner
+let board, turn, isWinner
 
 /*------------------------ Cached Element References ------------------------*/
 
@@ -51,8 +49,8 @@ function init(){
     0,0,0,
     0,0,0
   ]
-  isWinner = null // The winner variable will hold the player value (1 or -1) if there's a winner. The winner will hold a 'T' if there's a tie.
-  turn = 1 // X's turns will be marked by 1. O's turns will be marked by -1
+  isWinner = null 
+  turn = 1
   square.forEach(function(element,idx){
     square[idx].innerText = ''
     square[idx].style.pointerEvents='auto'
@@ -72,11 +70,12 @@ function handleClick(evt){
     evt.target.style.pointerEvents = "none"
     msg.innerText = `It's X's turn`
   }
-  // console.log(evt.target.id)
-  // console.log(turn)
-  // console.log(board)
+  console.log(evt.target.id)
+  console.log(turn)
+  console.log(board)
   turn = turn * -1
   render()
+  win()
 }
 
 function render(){
@@ -90,5 +89,22 @@ function render(){
 }
 
 function win(){
-  
+  if (
+    Math.abs(board[0] + board [1] + board[2]) == 3 ||
+    Math.abs(board[3] + board [4] + board[5]) == 3 ||
+    Math.abs(board[6] + board [7] + board[8]) == 3 ||
+    Math.abs(board[0] + board [3] + board[6]) == 3 ||
+    Math.abs(board[1] + board [4] + board[7]) == 3 ||
+    Math.abs(board[2] + board [5] + board[8]) == 3 ||
+    Math.abs(board[0] + board [4] + board[8]) == 3 ||
+    Math.abs(board[2] + board [4] + board[6]) == 3
+  ){
+    isWinner = turn * -1
+  }
+  if (isWinner == 1){
+    msg.innerText = `X is the winner`
+  } else if (isWinner == -1){
+    msg.innerText = `O is the winner`
+  }
 }
+
