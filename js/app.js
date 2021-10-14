@@ -54,7 +54,7 @@ function init(){
   square.forEach(function(element,idx){
     square[idx].innerText = ''
     square[idx].style.pointerEvents='auto'
-    square[idx].style.backgroundColor ='grey'
+    square[idx].style.backgroundColor ='#EDCB96'
   })
   msg.innerText =  `It's X's turn`
   render()
